@@ -1,0 +1,106 @@
+{
+  "protocol_version": "0.1.0",
+  "generated_at": "2025-02-14T00:00:00Z",
+  "sense_packet": {
+    "type": "object",
+    "required": ["packet_id", "timestamp", "source", "modalities", "payload", "interaction_mode"],
+    "properties": {
+      "packet_id": {"type": "string", "description": "UUIDv4"},
+      "timestamp": {"type": "string", "format": "date-time"},
+      "interaction_mode": {
+        "type": "string",
+        "enum": ["text_chat", "duplex_voice", "silent_command"],
+        "default": "text_chat"
+      },
+      "source": {
+        "type": "object",
+        "required": ["node", "gpu"],
+        "properties": {
+          "node": {"type": "string", "enum": ["debian-host", "gpu-0", "gpu-1"]},
+          "gpu": {"type": "integer", "enum": [0, 1]}
+        }
+      },
+      "modalities": {
+        "type": "array",
+        "items": {"type": "string", "enum": ["audio", "text", "file", "telemetry", "memory"]}
+      },
+      "priority": {"type": "string", "enum": ["low", "normal", "high", "interrupt"], "default": "normal"},
+      "payload": {
+        "type": "object",
+        "description": "Unified payload container for all modalities.",
+        "properties": {
+          "text": {"$ref": "#/text_payload"},
+          "files": {"type": "array", "items": {"$ref": "#/file_payload"}},
+          "audio": {"$ref": "#/audio_payload"},
+          "telemetry": {"$ref": "#/telemetry_payload"},
+          "memory": {"$ref": "#/memory_payload"}
+        }
+      }
+    }
+  },
+  "audio_payload": {
+    "type": "object",
+    "required": ["codec", "sample_rate_hz", "channels", "priority_interruption"],
+    "properties": {
+      "codec": {"type": "string", "enum": ["pcm_s16le"]},
+      "sample_rate_hz": {"type": "integer", "enum": [16000]},
+      "channels": {"type": "integer", "enum": [1]},
+      "priority_interruption": {"type": "boolean"},
+      "rtp_header": {
+        "type": "object",
+        "properties": {
+          "sequence": {"type": "integer"},
+          "timestamp": {"type": "integer"},
+          "ssrc": {"type": "integer"},
+          "extension": {"type": "object", "description": "RTP header extension for Priority Interruption flag."}
+        }
+      },
+      "frame_bytes": {"type": "string", "contentEncoding": "base64"}
+    }
+  },
+  "text_payload": {
+    "type": "object",
+    "required": ["content", "language"],
+    "properties": {
+      "content": {"type": "string"},
+      "language": {"type": "string", "default": "en"},
+      "annotations": {"type": "array", "items": {"type": "string"}}
+    }
+  },
+  "file_payload": {
+    "type": "object",
+    "required": ["name", "mime", "size_bytes", "sha256", "uri"],
+    "properties": {
+      "name": {"type": "string"},
+      "mime": {"type": "string"},
+      "size_bytes": {"type": "integer"},
+      "sha256": {"type": "string"},
+      "uri": {"type": "string", "description": "Local OpenClaw gateway URI or file path."}
+    }
+  },
+  "telemetry_payload": {
+    "type": "object",
+    "properties": {
+      "vram_gb": {"type": "number"},
+      "cpu_temp_c": {"type": "number"},
+      "vad": {"$ref": "#/vad_state"}
+    }
+  },
+  "memory_payload": {
+    "type": "object",
+    "properties": {
+      "letta_archival_reference": {"type": "string"},
+      "jitter_buffer_id": {"type": "string"}
+    }
+  },
+  "vad_state": {
+    "type": "object",
+    "required": ["valence", "arousal", "dominance", "updated_at"],
+    "properties": {
+      "valence": {"type": "number", "minimum": -1, "maximum": 1},
+      "arousal": {"type": "number", "minimum": -1, "maximum": 1},
+      "dominance": {"type": "number", "minimum": -1, "maximum": 1},
+      "updated_at": {"type": "string", "format": "date-time"}
+    }
+  }
+}
