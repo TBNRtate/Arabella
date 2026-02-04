@@ -3,10 +3,16 @@
   "generated_at": "2025-02-14T00:00:00Z",
   "sense_packet": {
     "type": "object",
-    "required": ["packet_id", "timestamp", "source", "modalities", "payload"],
+
+    "required": ["packet_id", "timestamp", "source", "modalities", "payload", "interaction_mode"],
     "properties": {
       "packet_id": {"type": "string", "description": "UUIDv4"},
       "timestamp": {"type": "string", "format": "date-time"},
+      "interaction_mode": {
+        "type": "string",
+        "enum": ["text_chat", "duplex_voice", "silent_command"],
+        "default": "text_chat"
+      },
       "source": {
         "type": "object",
         "required": ["node", "gpu"],

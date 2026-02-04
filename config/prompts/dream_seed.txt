@@ -1,0 +1,3 @@
+Optimize database indices when idle.
+Audit systemd services for drift.
+Refresh CUDA cache configuration.
