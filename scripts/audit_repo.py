@@ -1,4 +1,15 @@
 """Repository dry-run verification suite."""
+```python
+import sys
+import os
+from pathlib import Path
+
+# Force-add the project root directory to sys.path
+# This ensures we can import 'src' modules regardless of where the script is run from
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.append(str(PROJECT_ROOT))
+
+
 from __future__ import annotations
 
 import ast
