@@ -9,7 +9,7 @@
       "timestamp": {"type": "string", "format": "date-time"},
       "interaction_mode": {
         "type": "string",
-        "enum": ["duplex_voice", "text_chat", "silent_command"],
+        "enum": ["text_chat", "duplex_voice", "silent_command"],
         "default": "text_chat"
       },
       "source": {

@@ -18,3 +18,4 @@
 ## Phase 0 (Interaction Mode)
 - Added interaction_mode to Sense-Packet schema.
 - Routed SovereignBridge output based on duplex voice vs text chat modes.
+- Added system prompt modifiers for text chat, voice call, and silent command modes.

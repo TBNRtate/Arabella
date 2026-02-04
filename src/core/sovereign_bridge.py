@@ -45,16 +45,26 @@ class SovereignBridge:
         return merged
 
     def route_response(self, sense_packet: SensePacket, prompt: str) -> dict[str, Any]:
+        system_prompt = self._get_system_prompt_modifier(sense_packet.interaction_mode)
         if sense_packet.interaction_mode == "duplex_voice":
-            system_prompt = (
-                "MODE: VOICE CALL. Keep responses under 2 sentences. "
-                "No markdown. No code blocks. Be conversational."
-            )
             response = self.llm.generate(f"{system_prompt}\n{prompt}")
             control = VoiceControl(pitch=1.0, speed=1.0, tone="neutral")
             self.tts.synthesize(response.content, control)
             return {"mode": "duplex_voice", "routed_to": "PersonaPlexTTS"}
 
-        system_prompt = "MODE: TEXT CHAT. formatting allowed. Full detail."
+        if sense_packet.interaction_mode == "silent_command":
+            return {"mode": "silent_command", "confirmation": {"status": "queued"}}
+
         response = self.llm.generate(f"{system_prompt}\n{prompt}")
         return {"mode": "text_chat", "text": response.content, "thought": response.thought}
+
+    @staticmethod
+    def _get_system_prompt_modifier(mode: str) -> str:
+        if mode == "duplex_voice":
+            return (
+                "MODE: VOICE CALL. You are speaking via TTS. Keep responses under 2 sentences. "
+                "No markdown. No code blocks. Be conversational and 'Tsundere' but concise."
+            )
+        if mode == "silent_command":
+            return "MODE: SILENT. Execute the OpenClaw task. Output only a JSON confirmation. Do not chat."
+        return "MODE: TEXT CHAT. You are typing. Full detail, markdown, and code blocks allowed."
