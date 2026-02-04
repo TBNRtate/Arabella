@@ -14,3 +14,7 @@
 ## Phase 0 (Deployment Fixes)
 - Rewrote setup_env.sh with Debian 12 CUDA/NVIDIA install steps and torch CUDA 12 install.
 - Implemented DeepSeek LLM wrapper using llama-cpp-python.
+
+## Phase 0 (Interaction Mode)
+- Added interaction_mode to Sense-Packet schema.
+- Routed SovereignBridge output based on duplex voice vs text chat modes.
