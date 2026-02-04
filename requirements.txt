@@ -1,0 +1,11 @@
+torch
+llama-cpp-python
+letta
+openclaw
+psutil
+sounddevice
+webrtcvad
+fastapi
+uvicorn
+python-dotenv
+pyzmq

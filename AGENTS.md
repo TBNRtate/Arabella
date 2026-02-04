@@ -1,0 +1,16 @@
+# Arabella AGENTS Log
+
+## Phase 0
+- Initialized IO Standard schemas (`io_standard.json`).
+- Implemented GPU-1 audio gateway stub with Priority Interruption flag handling.
+- Implemented GPU-0 file orchestrator with atomic write semantics.
+
+## Phase 0 (Revision)
+- Added repository scaffolding (config/, scripts/, src/, data/) and deployment docs.
+- Moved gateway stubs into src/gateways and added telemetry bridge.
+- Added core orchestration stubs (config, event bus, sovereign bridge).
+- Added memory, monologue, and model interface stubs.
+
+## Phase 0 (Deployment Fixes)
+- Rewrote setup_env.sh with Debian 12 CUDA/NVIDIA install steps and torch CUDA 12 install.
+- Implemented DeepSeek LLM wrapper using llama-cpp-python.

@@ -1,0 +1,15 @@
+[Unit]
+Description=Arabella Sovereign Agent
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/workspace/Arabella
+EnvironmentFile=/workspace/Arabella/.env
+ExecStart=/workspace/Arabella/.venv/bin/python -m src.core.main
+Restart=always
+User=arabella
+Group=arabella
+
+[Install]
+WantedBy=multi-user.target
