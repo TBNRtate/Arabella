@@ -1,11 +1,24 @@
+# Core AI Logic
 torch
 llama-cpp-python
 letta
-openclaw
+
+# Hardware & Audio
 psutil
 sounddevice
 webrtcvad
+
+# Server & API
 fastapi
 uvicorn
 python-dotenv
 pyzmq
+
+# Utils
+requests
+numpy
+
+# Local/Custom Packages
+# Note: If OpenClaw is this repo, we don't install it. 
+# If it's a separate tool, use the git syntax:
+# openclaw @ git+https://github.com/TBNRtate/OpenClaw.git
