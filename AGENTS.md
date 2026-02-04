@@ -19,3 +19,7 @@
 - Added interaction_mode to Sense-Packet schema.
 - Routed SovereignBridge output based on duplex voice vs text chat modes.
 - Added system prompt modifiers for text chat, voice call, and silent command modes.
+
+## Phase 0 (Dry Run Suite)
+- Added scripts/audit_repo.py for file, JSON, syntax, and import checks.
+- Added GitHub Actions sanity_check workflow to run the audit.
