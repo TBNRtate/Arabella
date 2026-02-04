@@ -3,6 +3,7 @@
   "generated_at": "2025-02-14T00:00:00Z",
   "sense_packet": {
     "type": "object",
+
     "required": ["packet_id", "timestamp", "source", "modalities", "payload", "interaction_mode"],
     "properties": {
       "packet_id": {"type": "string", "description": "UUIDv4"},
